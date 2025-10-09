@@ -1,0 +1,29 @@
+name: Ejecutar Script EBOG1
+
+on:
+  schedule:
+    - cron: '0 * * * *'  # Ejecutar cada hora (UTC)
+  workflow_dispatch:  # Permite ejecutar manualmente desde GitHub
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Clonar el repositorio
+        uses: actions/checkout@v2
+
+      - name: Configurar jq
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Ejecutar script EBOG1.sh
+        run: |
+          chmod +x EBOG1.sh
+          ./EBOG1.sh
+        env:
+          API_KEY: ${{ secrets.API_KEY }}
+          CIUDAD: 'Bogotá'
+          BOX_ID: ${{ secrets.BOX_ID }}
+          TOKEN: ${{ secrets.TOKEN }}
