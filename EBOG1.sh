@@ -1,8 +1,11 @@
 #!/bin/bash
+# Elimina los \r (carriage return) al final de cada línea del propio script
+# (solo la primera vez si ya está limpio, no hace daño)
+sed -i 's/\r$//' "$0"
 
 # Configuración
-API_KEY="${API_KEY}"  # Utiliza el secreto API_KEY configurado en GitHub
-CIUDAD="${CIUDAD}"    # Utiliza el secreto CIUDAD configurado en GitHub
+API_KEY="${API_KEY}"
+CIUDAD="${CIUDAD}"
 URL="https://api.openweathermap.org/data/2.5/weather?q=$CIUDAD&units=metric&APPID=$API_KEY&lang=es"
 
 # IDs de sensores según el fenómeno
