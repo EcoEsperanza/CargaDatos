@@ -1,17 +1,11 @@
 #!/bin/bash
 
-# Si hay retornos de carro (\r), eliminarlos (por si acaso)
-# Esto solo corrige líneas que aún lo tengan; no sustituye guardarlo limpio
-sed -i 's/\r$//' "$0"
+# Configuración
+API_KEY="${API_KEY}"  # Utiliza el secreto API_KEY configurado en GitHub
+CIUDAD="${CIUDAD}"    # Utiliza el secreto CIUDAD configurado en GitHub
+URL="https://api.openweathermap.org/data/2.5/weather?q=$CIUDAD&units=metric&APPID=$API_KEY&lang=es"
 
-# Configuración desde entorno (variables configuradas en GitHub Actions)
-API_KEY="${API_KEY}"
-CIUDAD="${CIUDAD}"
-# Opcional: codificar caracteres especiales (tilde, espacios) en ciudad
-CIUDAD_ENCODED=$(echo "$CIUDAD" | sed 's/ /%20/g; s/á/a/g; s/é/e/g; s/í/i/g; s/ó/o/g; s/ú/u/g; s/Á/A/g; s/É/E/g; s/Í/I/g; s/Ó/O/g; s/Ú/U/g')
-URL="https://api.openweathermap.org/data/2.5/weather?q=${CIUDAD_ENCODED}&units=metric&APPID=${API_KEY}&lang=es"
-
-# IDs de sensores
+# IDs de sensores según el fenómeno
 ID_TEMP="6863e51fa17d510007ee781e"
 ID_HUMEDAD="6863e51fa17d510007ee781f"
 ID_VIENTO="6863e51fa17d510007ee7820"
@@ -19,6 +13,20 @@ ID_PRESION="6863e51fa17d510007ee7821"
 
 # Obtener datos
 RESPUESTA=$(curl -s "$URL")
+TEMP=$(echo "$RESPUESTA" | jq '.main.temp?')
+HUMEDAD=$(echo "$RESPUESTA" | jq '.main.humidity?')
+PRESION=$(echo "$RESPUESTA" | jq '.main.pressure?')
+VIENTO=$(echo "$RESPUESTA" | jq '.wind.speed?')
+
+# Fecha en formato ISO 8601 con "Z" (UTC)
+FECHA=$(date -u '+%Y-%m-%dT%H:%M:%SZ')
+
+# Imprimir formato para senseBox (una línea por sensor)
+echo "$ID_TEMP,$TEMP,$FECHA"
+echo "$ID_HUMEDAD,$HUMEDAD,$FECHA"
+echo "$ID_VIENTO,$VIENTO,$FECHA"
+echo "$ID_PRESION,$PRESION,$FECHA"
+
 
 # Debug: ver lo que responde la API (para ayudar a diagnosticar)
 echo "Respuesta cruda: $RESPUESTA" >&2
@@ -37,3 +45,4 @@ echo "$ID_TEMP,$TEMP,$FECHA"
 echo "$ID_HUMEDAD,$HUMEDAD,$FECHA"
 echo "$ID_VIENTO,$VIENTO,$FECHA"
 echo "$ID_PRESION,$PRESION,$FECHA"
+
