@@ -18,14 +18,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y jq
 
-      - name: Asegurar permisos de ejecución para EBOG1.sh
-        run: |
-          git update-index --chmod=+x EBOG1.sh
-          chmod +x EBOG1.sh
+      - name: Verificar archivos en el directorio
+        run: ls -l ${{ github.workspace }}
 
       - name: Ejecutar script EBOG1.sh
         run: |
-          ./EBOG1.sh
+          chmod +x ${{ github.workspace }}/EBOG1.sh
+          ${{ github.workspace }}/EBOG1.sh
         env:
           API_KEY: ${{ secrets.API_KEY }}
           CIUDAD: 'Bogotá'
