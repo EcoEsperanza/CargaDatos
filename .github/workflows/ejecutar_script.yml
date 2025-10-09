@@ -13,7 +13,7 @@ jobs:
       - name: Clonar el repositorio
         uses: actions/checkout@v3
 
-      - name: Diagnóstico: mostrar contenido del workspace
+      - name: Diagnóstico mostrar contenido del workspace
         run: |
           echo "PWD: $(pwd)"
           ls -R .
