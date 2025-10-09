@@ -1,8 +1,8 @@
 #!/bin/bash
 
 # Configuración
-API_KEY="6a5fcfc178c587b93cb380f892599e53"
-CIUDAD="Bogotá"
+API_KEY="${API_KEY}"  # Utiliza el secreto API_KEY configurado en GitHub
+CIUDAD="${CIUDAD}"    # Utiliza el secreto CIUDAD configurado en GitHub
 URL="https://api.openweathermap.org/data/2.5/weather?q=$CIUDAD&units=metric&APPID=$API_KEY&lang=es"
 
 # IDs de sensores según el fenómeno
