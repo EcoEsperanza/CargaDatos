@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Si hay retornos de carro (\r), eliminarlos (por si acaso)
+# Esto solo corrige líneas que aún lo tengan; no sustituye guardarlo limpio
+sed -i 's/\r$//' "$0"
+
 # Configuración desde entorno (variables configuradas en GitHub Actions)
 API_KEY="${API_KEY}"
 CIUDAD="${CIUDAD}"
