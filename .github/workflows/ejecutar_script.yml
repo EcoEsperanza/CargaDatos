@@ -23,8 +23,8 @@ jobs:
 
       - name: Ejecutar script EBOG1.sh
         run: |
-          chmod +x /EBOG2.sh
-          /EBOG1.sh
+          chmod +x /EBOG1.sh
+          /EBOG2.sh
         env:
           API_KEY: ${{ secrets.API_KEY }}
           CIUDAD: 'Bogotá'
