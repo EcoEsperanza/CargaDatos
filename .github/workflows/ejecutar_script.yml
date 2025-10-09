@@ -25,7 +25,7 @@ jobs:
 
       - name: Ejecutar script EBOG1.sh
         run: |
-          ./EBOG1.sh
+          EBOG1.sh
         env:
           API_KEY: ${{ secrets.API_KEY }}
           CIUDAD: 'Bogotá'
